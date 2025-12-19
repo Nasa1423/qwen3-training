@@ -1,0 +1,37 @@
+[project]
+name = "qwen3-finetune"
+version = "0.1.0"
+description = "Qwen3-4B fine-tuning with LoRA support for CUDA 12.8+ (RTX 50xx Blackwell)"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch==2.7.0",
+    "torchvision>=0.22.0",
+    "transformers>=4.57.3",
+    "peft>=0.14.0",
+    "accelerate>=1.2.0",
+    "datasets>=3.2.0",
+    "bitsandbytes>=0.45.0",
+    "trl>=0.12.0",
+    "wandb>=0.19.0",
+    "tensorboard>=2.18.0",
+    "packaging",
+    "ninja",
+    "flash-attn>=2.8.3",
+    "scipy>=1.14.0",
+    "sentencepiece>=0.2.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu12"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu12" }
+torchvision = { index = "pytorch-cu12" }
+
+[tool.uv]
+no-build-isolation-package = ["flash-attn"]
+
+[tool.uv.extra-build-dependencies]
+flash-attn = ["psutil", "torch"]
